@@ -4,7 +4,7 @@ import org.lwjgl.opengl.GL;
 import engine.Window;
 import engine.scene.Scene;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL46.*;
 
 public class Render {
 
@@ -22,6 +22,9 @@ public class Render {
     public void render(Window window, Scene scene) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glViewport(0, 0, window.getWidth(), window.getHeight());
+
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         sceneRender.render(scene);
     }

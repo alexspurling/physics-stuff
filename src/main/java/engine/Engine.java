@@ -46,29 +46,48 @@ public class Engine {
         float deltaUpdate = 0;
         float deltaFps = 0;
 
+        int frameCount = 0;
+        long lastFpsTime = System.currentTimeMillis();
+
         long updateTime = initialTime;
+        long startTime = System.nanoTime();
+
         while (running && !window.windowShouldClose()) {
+//            startTime = System.nanoTime();
             window.pollEvents();
+//            System.out.println("Poll time: " + (System.nanoTime() - startTime) / 1e6);
 
             long now = System.currentTimeMillis();
             deltaUpdate += (now - initialTime) / timeU;
             deltaFps += (now - initialTime) / timeR;
 
-            if (targetFps <= 0 || deltaFps >= 1) {
+//            if (targetFps <= 0 || deltaFps >= 1) {
                 appLogic.input(window, scene, now - initialTime);
-            }
+//            }
 
-            if (deltaUpdate >= 1) {
+//            if (deltaUpdate >= 1) {
                 long diffTimeMillis = now - updateTime;
                 appLogic.update(window, scene, diffTimeMillis);
                 updateTime = now;
                 deltaUpdate--;
-            }
+                frameCount++;
+//            }
 
-            if (targetFps <= 0 || deltaFps >= 1) {
+//            if (targetFps <= 0 || deltaFps >= 1) {
+
+                startTime = System.nanoTime();
                 render.render(window, scene);
+                System.out.println("Render time: " + (System.nanoTime() - startTime) / 1e6);
                 deltaFps--;
+                startTime = System.nanoTime();
                 window.update();
+                System.out.println("Window update time: " + (System.nanoTime() - startTime) / 1e6);
+//            }
+
+            if (System.currentTimeMillis() - lastFpsTime > 1000) {
+                System.out.println("FPS: " + frameCount);
+                frameCount = 0;
+                lastFpsTime = System.currentTimeMillis();
             }
             initialTime = now;
         }

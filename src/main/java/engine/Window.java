@@ -8,7 +8,7 @@ import java.util.concurrent.Callable;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL46.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window {
@@ -141,7 +141,7 @@ public class Window {
 
     public static class WindowOptions {
         public boolean compatibleProfile;
-        public int fps;
+        public int fps = 100;
         public int height = 1080;
         public int width = 1080;
         public int ups = Engine.TARGET_UPS;
