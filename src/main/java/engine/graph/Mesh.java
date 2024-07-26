@@ -14,9 +14,9 @@ public class Mesh {
     private int vaoId;
     private List<Integer> vboIdList;
 
-    public Mesh(float[] positions, float[] colors, int[] indices) {
+    public Mesh(float[] positions, int numVertices) {
         try (MemoryStack stack = MemoryStack.stackPush()) {
-            numVertices = indices.length;
+            this.numVertices = numVertices;
             vboIdList = new ArrayList<>();
 
             vaoId = glGenVertexArrays();
@@ -32,26 +32,32 @@ public class Mesh {
             glEnableVertexAttribArray(0);
             glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
 
-            // Color VBO
-            vboId = glGenBuffers();
-            vboIdList.add(vboId);
-            FloatBuffer colorsBuffer = stack.callocFloat(colors.length);
-            colorsBuffer.put(0, colors);
-            glBindBuffer(GL_ARRAY_BUFFER, vboId);
-            glBufferData(GL_ARRAY_BUFFER, colorsBuffer, GL_STATIC_DRAW);
-            glEnableVertexAttribArray(1);
-            glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, 0);
-
-            // Index VBO
-            vboId = glGenBuffers();
-            vboIdList.add(vboId);
-            IntBuffer indicesBuffer = stack.callocInt(indices.length);
-            indicesBuffer.put(0, indices);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboId);
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesBuffer, GL_STATIC_DRAW);
-
             glBindBuffer(GL_ARRAY_BUFFER, 0);
             glBindVertexArray(0);
+
+//            glPointSize(32.0f);
+            glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+
+            // Color VBO
+//            vboId = glGenBuffers();
+//            vboIdList.add(vboId);
+//            FloatBuffer colorsBuffer = stack.callocFloat(colors.length);
+//            colorsBuffer.put(0, colors);
+//            glBindBuffer(GL_ARRAY_BUFFER, vboId);
+//            glBufferData(GL_ARRAY_BUFFER, colorsBuffer, GL_STATIC_DRAW);
+//            glEnableVertexAttribArray(1);
+//            glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, 0);
+
+            // Index VBO
+//            vboId = glGenBuffers();
+//            vboIdList.add(vboId);
+//            IntBuffer indicesBuffer = stack.callocInt(indices.length);
+//            indicesBuffer.put(0, indices);
+//            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboId);
+//            glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesBuffer, GL_STATIC_DRAW);
+//
+//            glBindBuffer(GL_ARRAY_BUFFER, 0);
+//            glBindVertexArray(0);
         }
     }
 

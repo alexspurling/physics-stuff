@@ -8,5 +8,6 @@ out vec3 outColor;
 void main()
 {
     gl_Position = vec4(position, 1.0);
-    outColor = color;
+    outColor = vec3(0.0, 1.0, 0.0);
+    gl_PointSize = 32;
 }
